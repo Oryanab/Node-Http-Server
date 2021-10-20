@@ -1,4 +1,4 @@
-const validStudent = {
+module.exports.validStudent = {
   nameNotEqual: ["Ang", "Momo", "Appa", "Nina", "Superman", "Robinhood"],
   minAge: 18,
   maxAge: 35,
