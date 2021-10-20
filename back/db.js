@@ -3,7 +3,6 @@ module.exports.validStudent = {
   minAge: 18,
   maxAge: 35,
   ability: [
-    "ss",
     "time management",
     "Self-motivation",
     "quick learner",

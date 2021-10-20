@@ -20,22 +20,14 @@ const handleChange = (e) => {
   switch (targetElement) {
     case "name":
       studentName = elementValue;
-      console.log(studentName);
       break;
     case "age":
       studentAge = elementValue;
-      console.log(studentAge);
       break;
     case "ability":
       studentAbility = elementValue;
-      console.log(studentAbility);
       break;
   }
-  //   return {
-  //     name: studentName,
-  //     age: studentAge,
-  //     ability: studentAbility,
-  //   };
 };
 
 clientForm.addEventListener("change", (e) => handleChange(e));
@@ -56,9 +48,15 @@ const handleSubmit = async (studentName, studentAge, studentAbility) => {
       },
       headers
     );
-    console.log(data, "hello " + studentName);
+    try {
+      if (data.data) {
+        alert("Hello, " + studentName + " " + data.data);
+      }
+    } catch (e) {
+      alert("Please Try Again");
+    }
   } catch (e) {
-    console.log(e + "failed");
+    console.log(e + "process failed, Please Try Again");
   }
 };
 

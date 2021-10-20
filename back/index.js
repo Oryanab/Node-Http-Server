@@ -12,14 +12,14 @@ const server = http.createServer((req, res) => {
   });
   // get main route
   if (req.method === "GET" && req.url === "/") {
-    res.write("hey");
+    res.write(body);
     res.end();
     return;
   }
   // check in db:
   function checkName(name) {
     for (let invalid of validStudent.nameNotEqual) {
-      if (invalid !== name) {
+      if (invalid !== name && !parseInt(name)) {
         return true;
       } else {
         return false;
@@ -27,31 +27,34 @@ const server = http.createServer((req, res) => {
     }
   }
   function checkAge(age) {
-    if (age > 20) {
+    if (age >= validStudent.minAge && age <= validStudent.maxAge) {
       return true;
     } else {
       return false;
     }
   }
   function checkAbility(ability) {
-    for (let neededAbility of validStudent.ability) {
-      if (ability === neededAbility) {
-        return true;
-      } else {
-        return false;
-      }
+    let allGoodAbilities;
+    validStudent.ability.forEach((needed) => {
+      allGoodAbilities += needed + " ";
+    });
+    if (allGoodAbilities.includes(ability)) {
+      return true;
+    } else {
+      return false;
     }
   }
   // Post requests
   req.on("data", (data) => {
+    const jsonData = JSON.parse(data);
     if (
-      checkName(data.studentName) //&&
-      //checkAge(data.studentAge) // &&
-      //checkAbility(data.studentAbility)
+      checkName(jsonData.studentName) &&
+      checkAge(jsonData.studentAge) &&
+      checkAbility(jsonData.studentAbility)
     ) {
-      body += data;
+      body += "Welcome to Cyber4s";
     } else {
-      body += "No Match";
+      body += "We Are Sorry You cant sign In";
     }
   });
 
